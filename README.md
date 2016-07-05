@@ -1,4 +1,4 @@
-# TwicePixels API
+# TwicePixels API - typescript
 
 A [Express](http://expressjs.com) application.
 
@@ -11,12 +11,12 @@ A [Express](http://expressjs.com) application.
 
 2. Clone the repository:
     ```shell
-    git clone https://github.com/twicepixels/tp-api-main.git
+    git clone https://github.com/twicepixels/tp-main-api.git
     ```
 
 3. Navigate to the folder:
     ```shell
-    cd tp-api-main
+    cd tp-main-api
     ```
 
 4. Import NodeJs dependencies into the project by running the following in terminal:
