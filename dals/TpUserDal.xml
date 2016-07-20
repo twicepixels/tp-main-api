@@ -1,0 +1,19 @@
+<dal>
+  <entities>
+    <entity id="tp.user">
+      <settings/>
+      <operations>
+        <operation id="getUser">
+          <columns>
+            <column id="IDUSER" type="NUMBER"/>
+          </columns>
+          <sql>
+            SELECT idUser, name, lastName, `user`, password, idRole
+            FROM twicepixels.`user`
+            WHERE idUser = ?
+          </sql>
+        </operation>
+      </operations>
+    </entity>
+  </entities>
+</dal>
