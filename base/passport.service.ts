@@ -35,7 +35,8 @@ export class PassportService extends Service {
 							id: user.id
 						};
 						return done(null, returnUser, {
-							message: 'Logged In Successfully'
+              returnUser
+							//message: 'Logged In Successfully'
 						});
 					});
 				})
