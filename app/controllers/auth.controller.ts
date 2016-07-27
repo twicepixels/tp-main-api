@@ -15,9 +15,13 @@ export class AuthController {
 						message: err.message
 					});
 				}
-				return res.send({
+        console.log(user);
+        return res.json({
+          user
+        });
+				/*return res.send({
 					message: 'login successful'
-				});
+				});*/
 			});
 		})(req, res);
 	}
