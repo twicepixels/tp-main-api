@@ -38,6 +38,13 @@ module.exports = (sequelize: any, DataTypes: any)=> {
             next(error);
           });
         }
+      },
+      instanceMethods: {
+        toJSON: ()=> {
+          var values = this.get();
+          delete values.password;
+          return values;
+        }
       }
     });
 };

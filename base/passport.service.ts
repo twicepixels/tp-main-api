@@ -28,8 +28,7 @@ export class PassportService extends Service {
             if (!isEqual) {
               return done(null, false, {message: 'Invalid Password'});
             }
-            delete user["password"];
-            return done(null, user, {message: 'Logged In Successfully'});
+            return done(null, user.toJSON(), {message: 'Logged In Successfully'});
           });
         });
       });
@@ -55,11 +54,9 @@ export class PassportService extends Service {
   //helper functions
   private static findById(id: number, next: any) {
     this.Models.User.findOne({where: {id: id}})
-      .then((user: any)=> {
-        return next(null, user.get({plain: true}));
-      }, (error: any)=> {
-        return next(error, null);
-      });
+      .then(
+        (user: any)=> next(null, user),
+        (error: any)=> next(error, null));
   }
 
   private static findByUsername(username: string, next: any) {
@@ -70,12 +67,9 @@ export class PassportService extends Service {
           {username: {$eq: username}}
         ]
       }
-    }).then((user: any)=> {
-      // was found successfully!
-      next(null, user.get({plain: true}));
-    }, (error: any)=> {
-      // error handling
-      next(error, null);
-    });
+    }).then(
+      (user: any)=> next(null, user),
+      (error: any)=> next(error, null)
+    );
   }
 }
