@@ -40,7 +40,7 @@ module.exports = (sequelize: any, DataTypes: any)=> {
         }
       },
       instanceMethods: {
-        toJSON: ()=> {
+        toJSON: function () {
           var values = this.get();
           delete values.password;
           return values;
