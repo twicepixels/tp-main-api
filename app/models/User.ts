@@ -1,23 +1,25 @@
-var bcrypt = require('bcrypt');
-module.exports = function (sequelize: any, DataTypes: any) {
+import { CryptoService } from "../../base/crypto.service";
+module.exports = (sequelize: any, DataTypes: any)=> {
   return sequelize.define('User', {
       id: {
-        field: 'userId',
+        field: "userId",
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      username: {
+      userName: {
         type: DataTypes.STRING,
         validate: {notEmpty: true}
       },
       email: {
         type: DataTypes.STRING,
+        unique: true,
         validate: {notEmpty: true, isEmail: true}
       },
       password: {
         type: DataTypes.STRING,
         validate: {notEmpty: true, min: 8}
       },
+      accountId: DataTypes.INTEGER,
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       location: DataTypes.STRING,
@@ -29,20 +31,19 @@ module.exports = function (sequelize: any, DataTypes: any) {
       freezeTableName: true,
       tableName: "customer_user",
       hooks: {
-        beforeCreate: function (user: any, options: any) {
-          user.createdAt = new Date();
-          if (user.hasOwnProperty('password')) {
-            bcrypt.genSalt(10, function (err: any, salt: string) {
-              bcrypt.hash(user.password, salt, function (err: any, hash: string) {
-                if (!err) {
-                  user.password = hash;
-                }
-              });
-            });
-          }
-        },
-        beforeUpdate: function (user: any, options: any) {
-          user.username = 'Toni'
+        beforeCreate: (user: any, options: any, next: any)=> {
+          CryptoService.crypt(user.password, (error, result)=> {
+            user.createdAt = new Date();
+            user.password = result;
+            next(error);
+          });
+        }
+      },
+      instanceMethods: {
+        toJSON: function () {
+          var values = this.get();
+          delete values.password;
+          return values;
         }
       }
     });

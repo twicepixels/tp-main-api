@@ -1,6 +1,21 @@
 import { Service } from "../../base/base.service";
 
 export class UserService extends Service {
+
+
+  public static create(criteria: any, next: any){
+    this.Models.User.create(
+      criteria
+    ).then(function (user: any) {
+      // was created successfully!
+      next(null, user);
+    }, function (error: any) {
+      // error handling
+      next(error, null);
+    });
+  }
+
+
 	public static getAll(criteria: any, next: any) {
 		this.Models.User.findAll({
 			where: criteria
