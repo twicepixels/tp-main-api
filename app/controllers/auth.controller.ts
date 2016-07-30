@@ -22,6 +22,6 @@ export class AuthController {
 
   public static logout(req: Request, res: Response) {
     req.logout();
-    res.send('logout successful');
+    res.send({message: 'logout successful'});
   }
 }
