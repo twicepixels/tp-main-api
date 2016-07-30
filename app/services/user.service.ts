@@ -1,52 +1,65 @@
-import { Service } from "../../base/base.service";
+import {Service} from "../../base/base.service";
 
 export class UserService extends Service {
 
 
-  public static create(criteria: any, next: any){
+  public static create(data:any, next:any) {
     this.Models.User.create(
-      criteria
-    ).then(function (user: any) {
+      data
+    ).then(function (user:any) {
       // was created successfully!
       next(null, user);
-    }, function (error: any) {
+    }, function (error:any) {
+      // error handling
+      next(error, null);
+    });
+  }
+
+  public static updateById(id:number, data:any, next:any) {
+    this.Models.User.update(
+      data,
+      {where: {"id": id}}
+    ).then(function (user:any) {
+      // was created successfully!
+      next(null, user);
+    }, function (error:any) {
       // error handling
       next(error, null);
     });
   }
 
 
-	public static getAll(criteria: any, next: any) {
-		this.Models.User.findAll({
-			where: criteria
-		}).then(function (user: any) {
-			// was found successfully!
-			next(null, user);
-		}, function (error: any) {
-			// error handling
-			next(error, null);
-		});
-	}
+  public static getAll(criteria:any, next:any) {
+    this.Models.User.findAll({
+      where: criteria
+    }).then(function (user:any) {
+      // was found successfully!
+      next(null, user);
+    }, function (error:any) {
+      // error handling
+      next(error, null);
+    });
+  }
 
-  public static get(criteria: any, next: any){
+  public static getById(id:number, next:any) {
     this.Models.User.find({
-      where: criteria
-    }).then(function (user: any) {
+      where: {"id": id}
+    }).then(function (user:any) {
       // was found successfully!
       next(null, user);
-    }, function (error: any) {
+    }, function (error:any) {
       // error handling
       next(error, null);
     });
   }
 
-  public static delete(criteria: any, next: any){
+  public static deleteById(id:number, next:any) {
     this.Models.User.delete({
-      where: criteria
-    }).then(function (user: any) {
+      where: {"id": id}
+    }).then(function (user:any) {
       // was found successfully!
       next(null, user);
-    }, function (error: any) {
+    }, function (error:any) {
       // error handling
       next(error, null);
     });
