@@ -26,6 +26,11 @@ module.exports = function (sequelize: any, DataTypes: any) {
     {
       timestamps: false,
       freezeTableName: true,
-      tableName: "catalog"
+      tableName: "catalog",
+      defaultScope: {
+        where: {
+          statusId: 1
+        }
+      }
     });
 };
