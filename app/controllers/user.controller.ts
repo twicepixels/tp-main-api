@@ -1,5 +1,7 @@
 import {Request, Response} from 'express';
 import {UserService} from "../services/user.service";
+import {GenericDao} from "../util/GenericDao";
+import {Map} from "../framework/Map";
 
 export class UserController {
 
@@ -29,7 +31,7 @@ export class UserController {
   }
 
   public static getAll(req:Request, res:Response) {
-    UserService.getAll(null, function (err:any, result:any) {
+    UserService.getAll(req.body, function (err:any, result:any) {
       if (err) {
         res.status(500).send({
           message: err.message
@@ -66,6 +68,12 @@ export class UserController {
     });
   }
 
-
+  public static getUsersByAccount(req:Request, res:Response){
+    let accountId = parseInt(req.param("accountId"));
+    var data:Map = new Map();
+    data.insert("accountId", accountId);
+    let dao:GenericDao = new GenericDao("dals/TpUserDal.xml", "tp.user");
+    return dao.getList(req.body,"getUsersByAccount");
+  }
 
 }

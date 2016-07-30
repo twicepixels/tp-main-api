@@ -14,3 +14,5 @@ USER_ROUTER.post('/getAll', UserController.getAll);
 USER_ROUTER.put('/:id', UserController.updateById);
 //delete
 USER_ROUTER.delete('/:id', UserController.deleteById);
+//getUsersByAccount
+USER_ROUTER.get('/getUsersByAccount/:idAccount', UserController.getUsersByAccount);

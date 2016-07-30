@@ -1,7 +1,7 @@
 /**
  * Created by Gabriel on 04/06/2016.
  */
-class ListItem<T> {
+export class ListItem<T> {
     private list:List<T>;
     private index:number;
 
@@ -22,7 +22,7 @@ class ListItem<T> {
     }
 }
 
-class List<T> {
+export class List<T> {
     private items:Array<ListItem<T>>;
 
     constructor() {
