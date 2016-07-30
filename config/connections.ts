@@ -6,7 +6,7 @@ module.exports.connections = {
 		user: 'twicepixels01',
 		password: '!twiceAdm001',
 		database: 'twicepixels',
-		logging: false,
+		logging: true,
 		pool: {
 			min: 0,
 			max: 5,

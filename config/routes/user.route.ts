@@ -1,9 +1,16 @@
-import { Router } from 'express';
-import { UserController } from "../../app/controllers/user.controller";
+import {Router} from 'express';
+import {UserController} from "../../app/controllers/user.controller";
 
 
-export const USER_ROUTER: Router = Router();
+export const USER_ROUTER:Router = Router();
 // define routes
-USER_ROUTER.get('/', UserController.getAll);
-USER_ROUTER.post('/user', UserController.get);
-USER_ROUTER.post('/create', UserController.create);
+//update
+USER_ROUTER.post('/', UserController.create);
+//getById
+USER_ROUTER.get('/:id', UserController.getById);
+//getAll
+USER_ROUTER.post('/getAll', UserController.getAll);
+//update
+USER_ROUTER.put('/:id', UserController.updateById);
+//delete
+USER_ROUTER.delete('/:id', UserController.deleteById);
