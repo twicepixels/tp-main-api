@@ -3,14 +3,14 @@
     <entity id="tp.user">
       <settings/>
       <operations>
-        <operation id="getUser">
+        <operation id="getUsersByAccount">
           <columns>
-            <column id="IDUSER" type="NUMBER"/>
+            <column id="ACCOUNTID" type="NUMBER"/>
           </columns>
           <sql>
-            SELECT idUser, name, lastName, `user`, password, idRole
-            FROM twicepixels.`user`
-            WHERE idUser = ?
+          SELECT *
+            FROM twicepixels.customer_user
+           WHERE accountId = ?
           </sql>
         </operation>
       </operations>

@@ -1,7 +1,7 @@
 /**
  * Created by Gabriel on 04/06/2016.
  */
-class SQLParameter {
+export class SQLParameter {
     private id:string;
     private type:string;
 

@@ -1,6 +1,6 @@
-import Map = MapModule.Map;
 import {Service} from '../../base/base.service';
 import {DalReader} from './DalReader';
+import {Map} from "../framework/Map";
 /**
  * Created by Gabriel on 29/06/2016.
  */
