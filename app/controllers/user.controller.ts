@@ -73,7 +73,6 @@ export class UserController {
     var data:Map = new Map();
     data.insert("accountId", accountId);
     let dao:GenericDao = new GenericDao("dals/TpUserDal.xml", "tp.user");
-    return dao.getList(req.body,"getUsersByAccount");
+   return dao.getList(data,"getUsersByAccount");
   }
-
 }

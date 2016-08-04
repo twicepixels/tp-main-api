@@ -67,10 +67,11 @@ export class DalReader {
               }
             }
           }
+          miCallback(_class.getScript(), _class.getParameters());
         }
       });
-      this.fs.close();
-      miCallback(this.getScript(), this.getParameters());
+      //this.fs.close();
+
     } catch (ex) {
       // print the name of the root element or error message
       //dump(oDOM.documentElement.nodeName == "parsererror" ? "error while parsing" : oDOM.documentElement.nodeName);
