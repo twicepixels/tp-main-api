@@ -24,12 +24,14 @@ export class PassportService extends Service {
               message: 'Unknown user ' + username
             });
           }
-          CryptoService.compare(password, user.password, (err: any, isEqual: boolean)=> {
-            if (!isEqual) {
-              return done(null, false, {message: 'Invalid Password'});
-            }
-            return done(null, user.toJSON(), {message: 'Logged In Successfully'});
-          });
+          CryptoService.compare(password, user.password).then(
+            (isEqual: boolean)=> {
+              if (!isEqual) {
+                return done(null, false, {message: 'Invalid Password'});
+              }
+              return done(null, user.toJSON(), {message: 'Logged In Successfully'});
+            }, (error: any)=>done(error)
+          );
         });
       });
     }));

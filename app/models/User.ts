@@ -1,4 +1,7 @@
 import { CryptoService } from "../../base/crypto.service";
+import { SequenceService } from "../services/sequence.service";
+let sequenceService: SequenceService = new SequenceService();
+
 module.exports = (sequelize: any, DataTypes: any)=> {
   return sequelize.define('User', {
       id: {
@@ -32,11 +35,18 @@ module.exports = (sequelize: any, DataTypes: any)=> {
       tableName: "customer_user",
       hooks: {
         beforeCreate: (user: any, options: any, next: any)=> {
-          CryptoService.crypt(user.password, (error, result)=> {
-            user.createdAt = new Date();
-            user.password = result;
-            next(error);
-          });
+          CryptoService.crypt(user.password).then(
+            (hashedPassword: string)=> {
+              user.createdAt = new Date();
+              user.password = hashedPassword;
+              sequenceService.getNextSequence("customer_user").then(
+                (result: any)=> {
+                  user.id = result.id;
+                  next(null, user);
+                }, (error)=>next(error)
+              );
+            }, (error)=>next(error)
+          );
         }
       },
       instanceMethods: {

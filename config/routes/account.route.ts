@@ -1,8 +1,7 @@
-import {Router} from 'express';
-import {AccountController} from "../../app/controllers/account.controller";
+import { Router } from 'express';
+import { AccountController } from "../../app/controllers/account.controller";
 
-
-export const ACCOUNT_ROUTER:Router = Router();
+export const ACCOUNT_ROUTER: Router = Router();
 // define routes
 //update
 ACCOUNT_ROUTER.post('/', AccountController.create);
@@ -14,5 +13,3 @@ ACCOUNT_ROUTER.post('/getAll', AccountController.getAll);
 ACCOUNT_ROUTER.put('/:id', AccountController.updateById);
 //delete
 ACCOUNT_ROUTER.delete('/:id', AccountController.deleteById);
-//getMaxAccountId
-ACCOUNT_ROUTER.post('/getMaxAccountId', AccountController.getMaxAccountId);

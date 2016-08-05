@@ -1,62 +1,23 @@
-/**
- * Created by Gabriel on 03/08/2016.
- */
-import {Service} from "../../base/base.service";
+var util = require("util");
+import { Map } from "../../base/framework/Map";
+import { GenericDao } from "../../base/dao/GenericDao";
+let seqDao = new GenericDao("UtilitiesDal", "general.sequence");
 
-export class SequenceService extends Service {
-  public static create(data:any, next:any) {
-    this.Models.Sequence.create(
-      data
-    ).then(function (sequence:any) {
-      // was created successfully!
-      next(null, sequence);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
-  }
+export class SequenceService {
 
-  public static updateBySequenceName(sequenceName:string, data:any, next:any) {
-    this.Models.Sequence.update(
-      data,
-      {where: {"sequenceName": sequenceName}}
-    ).then(function (sequence:any) {
-      // was created successfully!
-      next(null, sequence);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
-  }
-
-  public static getSequenceName(sequenceName:string, next:any) {
-    this.Models.Sequence.find({
-      where: {"sequenceName": sequenceName}
-    }).then(function (sequence:any) {
-      // was found successfully!
-      next(null, sequence);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
-  }
-
-  public static getNextSequence(sequenceName:string, next:any) {
-    this.Models.Sequence.find({
-      where: {"sequenceName": sequenceName}
-    }).then(function (sequence:any) {
-      // was found successfully!
-      let nextSequence = sequence.sequenceNumber + sequence.incrementNumber;
-      sequence.sequenceNumber = nextSequence;
-      sequence.update();
-      next(null, sequence);
-    }, function (error:any) {
-      // error handling
-      let data  = "{\"sequenceName\" : " + sequenceName +
-        ", \"sequenceNumber\" : " + 1 +
-        ", \"incrementNumber\" : " + 1 +
-        " }";
-      SequenceService.create(data, next);
+  public getNextSequence(sequenceName: string): Promise<any> {
+    let data: Map = new Map();
+    data.insert("pName", sequenceName);
+    return new Promise((resolve: any, reject: any)=> {
+      seqDao.execRaw("P_NextSequence", data).then(
+        (result: any)=> {
+          if (result) {
+            resolve(result[0]);
+          }
+          throw new Error(util.format("Sequence %s not available.", sequenceName));
+        },
+        (error: any)=>reject(error)
+      ).catch((error: any)=>reject(error));
     });
   }
 }

@@ -1,97 +1,44 @@
-import {Service} from "../../base/base.service";
-var sequelize = require("sequelize");
-var Promise = require('promise');
+import { Service } from "../../base/base.service";
+import { UserService } from "../services/user.service";
+let userService: UserService = new UserService();
 
 export class AccountService extends Service {
 
-
-  public static create(data:any, next:any) {
-    
-    let model:any = this.Models;
-    this.Models.Account.max('id')   /// get the max of the accounts registers from account table
-     .then(function (accountMax:any) {
-       let account:any = {"id":accountMax};
-       data.id = account.id + 1;    /// sum one to get the next account number
-       model.Account.create( data
-       ).then(function (account:any) {  ///get account register saved into account table
-
-         data.accountId = account.id;
-         model.User.create( data        ///create user, using email, accountId, userId and password fields
-         ).then(function (user:any) {
-           next(null, user);
-         }, function (error:any) {
-           next(error, null);
-         });
-
-         return account;
-       }, function (error:any) {
-         next(error, null);
-       });
-    }, function (error:any) {
-      next(error, null);
-    });
-    
-  }
-
-
-  public static updateById(id:number, data:any, next:any) {
-    this.Models.Account.update(
-      data,
-      {where: {"id": id}}
-    ).then(function (account:any) {
-      // was created successfully!
-      next(null, account);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
+  public create(data: any): Promise<any> {
+    let _service = this;
+    return new Promise((resolve: any, reject: any)=> {
+      _service.Models.Account.create(data).then(
+        (account: any)=> {
+          //get account register saved into account table
+          data.accountId = account.id;
+          // create user, using email, accountId,
+          // userId and password fields
+          userService.create(data).then(
+            (user: any)=> resolve(user),
+            (error: any)=> {
+              _service.deleteById(account.id);
+              reject(error);
+            }
+          );
+        },
+        (error: any)=>reject(error)
+      );
     });
   }
 
-
-  public static getMaxAccountId(data:any, next:any):any{
-      this.Models.Account.max('id')   /// get the max of the accounts registers from account table
-        .then(function (accountMax:any) {
-          let account:any = {"id":accountMax};
-          account.id = account.id + 1;    /// sum one to get the next account number
-          next(null, account);
-        }, function (error:any) {
-          next(error, null);
-        });
+  public updateById(id: number, data: any): Promise<any> {
+    return this.Models.Account.update(data, {where: {"id": id}});
   }
 
-  public static getAll(criteria:any, next:any) {
-   this.Models.Account.findAll({
-      where: criteria
-    }).then(function (account:any) {
-      // was found successfully!
-      next(null, account);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public getAll(criteria: any): Promise<any> {
+    return this.Models.Account.findAll({where: criteria});
   }
 
-  public static getById(id:number, next:any) {
-    this.Models.Account.find({
-      where: {"id": id}
-    }).then(function (account:any) {
-      // was found successfully!
-      next(null, account);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public getById(id: number): Promise<any> {
+    return this.Models.Account.find({where: {"id": id}});
   }
 
-  public static deleteById(id:number, next:any) {
-    this.Models.Account.delete({
-      where: {"id": id}
-    }).then(function (account:any) {
-      // was found successfully!
-      next(null, account);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public deleteById(id: number): Promise<any> {
+    return this.Models.Account.destroy({where: {"id": id}});
   }
 }

@@ -27,8 +27,7 @@ export class DalReader {
 
     return new Promise((resolve: any, reject: any)=> {
       readFile(fileName, "").then(function (data: any) {
-        console.log("Asynchronous read: " + data.toString());
-
+        // console.log("Asynchronous read: " + data.toString());
         let text: string = data.toString();
         let oParser: DOMParser = new DOMParser();
         let oDOM = oParser.parseFromString(text, 'text/xml');
