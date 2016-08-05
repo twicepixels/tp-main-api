@@ -10,7 +10,7 @@
           <sql>
           SELECT *
             FROM twicepixels.customer_user
-           WHERE accountId = ?
+           WHERE accountId = $ACCOUNTID
           </sql>
         </operation>
       </operations>

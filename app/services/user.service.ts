@@ -1,67 +1,24 @@
-import {Service} from "../../base/base.service";
+import { Service } from "../../base/base.service";
 
 export class UserService extends Service {
 
-
-  public static create(data:any, next:any) {
-    this.Models.User.create(
-      data
-    ).then(function (user:any) {
-      // was created successfully!
-      next(null, user);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public create(data: any): Promise<any> {
+    return this.Models.User.create(data);
   }
 
-  public static updateById(id:number, data:any, next:any) {
-    this.Models.User.update(
-      data,
-      {where: {"id": id}}
-    ).then(function (user:any) {
-      // was created successfully!
-      next(null, user);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public updateById(id: number, data: any): Promise<any> {
+    return this.Models.User.update(data, {where: {"id": id}});
   }
 
-
-  public static getAll(criteria:any, next:any) {
-    this.Models.User.findAll({
-      where: criteria
-    }).then(function (user:any) {
-      // was found successfully!
-      next(null, user);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public getAll(criteria: any): Promise<any> {
+    return this.Models.User.findAll({where: criteria});
   }
 
-  public static getById(id:number, next:any) {
-    this.Models.User.find({
-      where: {"id": id}
-    }).then(function (user:any) {
-      // was found successfully!
-      next(null, user);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public getById(id: number): Promise<any> {
+    return this.Models.User.find({where: {"id": id}});
   }
 
-  public static deleteById(id:number, next:any) {
-    this.Models.User.delete({
-      where: {"id": id}
-    }).then(function (user:any) {
-      // was found successfully!
-      next(null, user);
-    }, function (error:any) {
-      // error handling
-      next(error, null);
-    });
+  public deleteById(id: number): Promise<any> {
+    return this.Models.User.destroy({where: {"id": id}});
   }
 }

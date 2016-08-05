@@ -2,7 +2,7 @@ export class Map {
   private mapItems:Array<MapItem>;
 
   constructor() {
-    this.mapItems = new Array<MapItem>();
+    this.mapItems = [];
   }
 
   public empty():boolean {
