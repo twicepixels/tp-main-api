@@ -17,7 +17,7 @@ export class GenericDao extends Service {
     reader.readOperation(this.file, this.schema, operationID, function (sql:string, parameters:List<SQLParameter>) {
       var arrayParameters = new Array();
       for (var i = 0; i < parameters.size(); i++) {
-        var value = data.get(parameters.get(i).value.getId()); 
+        var value = data.get(parameters.get(i).value.getId());
         arrayParameters[i] = value;
       }
       _class.Models.query(sql, arrayParameters, function (err:any, results:any) {
@@ -26,4 +26,5 @@ export class GenericDao extends Service {
       });
     });
   }
+  //Db[“mysqldb”].
 }
