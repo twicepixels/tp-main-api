@@ -41,4 +41,10 @@ export class AccountService extends Service {
   public deleteById(id: number): Promise<any> {
     return this.Models.Account.destroy({where: {"id": id}});
   }
+
+  //noinspection JSMethodCanBeStatic
+  public addAccountUser(id: number, data: any): Promise<any> {
+    data["accountId"] = id;
+    return userService.create(data);
+  }
 }

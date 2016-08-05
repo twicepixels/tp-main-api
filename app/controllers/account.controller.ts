@@ -11,7 +11,7 @@ export class AccountController {
   }
 
   public static updateById(req: Request, res: Response) {
-    let id = parseInt(req.param("id"));
+    let id = parseInt(req.params["id"]);
     c.handleService(res, accountService.updateById(id, req.body));
   }
 
@@ -20,12 +20,17 @@ export class AccountController {
   }
 
   public static getById(req: Request, res: Response) {
-    let id = parseInt(req.param("id"));
+    let id = parseInt(req.params["id"]);
     c.handleService(res, accountService.getById(id));
   }
 
   public static deleteById(req: Request, res: Response) {
-    let id = parseInt(req.param("id"));
+    let id = parseInt(req.params["id"]);
     c.handleService(res, accountService.deleteById(id));
+  }
+
+  public static addAccountUser(req: Request, res: Response) {
+    let id = parseInt(req.params["id"]);
+    c.handleService(res, accountService.addAccountUser(id, req.body));
   }
 }

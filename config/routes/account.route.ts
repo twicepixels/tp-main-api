@@ -13,3 +13,5 @@ ACCOUNT_ROUTER.post('/getAll', AccountController.getAll);
 ACCOUNT_ROUTER.put('/:id', AccountController.updateById);
 //delete
 ACCOUNT_ROUTER.delete('/:id', AccountController.deleteById);
+//add user
+ACCOUNT_ROUTER.post('/:id/users', AccountController.addAccountUser);
