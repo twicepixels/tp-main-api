@@ -22,6 +22,12 @@ export class UserController {
     c.handleService(res, userService.getAll(req.body));
   }
 
+  public static getCurrent(req: Request, res: Response): void {
+    c.handleService(res, new Promise((resolve: any)=> {
+      resolve(req.user.toJSON());
+    }));
+  }
+
   public static getById(req: Request, res: Response): void {
     let id = parseInt(req.params["id"]);
     c.handleService(res, userService.getById(id));

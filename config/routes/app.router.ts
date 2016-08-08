@@ -33,7 +33,7 @@ export class AppRouter {
     router.use("/", APP_ROUTER);
     router.use("/auth", AUTH_ROUTER);
     router.use("/utils", UTIL_ROUTER);
-    router.use("/users", authenticatedPolicy, USER_ROUTER);
-    router.use("/accounts", authenticatedPolicy, ACCOUNT_ROUTER);
+    router.use("/users", USER_ROUTER);
+    router.use("/accounts", ACCOUNT_ROUTER);
   }
 }
