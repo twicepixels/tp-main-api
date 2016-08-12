@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { UtilService } from "../services/util.service";
 
 let c = require("../../base/base.controller");
-let utilService: UtilService = new UtilService();
 
 export class UtilController {
   public static getCatalog(req: Request, res: Response): void {
-    c.handleService(res, utilService.getCatalog(req.body));
+    let _service = new UtilService(req, res);
+    c.handleService(res, _service.getCatalog(req.body));
   }
 }

@@ -1,8 +1,15 @@
+import { Request, Response } from "express";
 import { Service } from "../../base/base.service";
 import { UserService } from "../services/user.service";
-let userService: UserService = new UserService();
 
 export class AccountService extends Service {
+
+  private userService: UserService;
+
+  constructor(req: Request, res: Response) {
+    super(req, res);
+    this.userService = new UserService(req, res);
+  }
 
   public create(data: any): Promise<any> {
     let _service = this;
@@ -13,7 +20,7 @@ export class AccountService extends Service {
           data.accountId = account.id;
           // create user, using email, accountId,
           // userId and password fields
-          userService.create(data).then(
+          _service.userService.create(data).then(
             (user: any)=> resolve(user),
             (error: any)=> {
               _service.deleteById(account.id);
@@ -45,6 +52,6 @@ export class AccountService extends Service {
   //noinspection JSMethodCanBeStatic
   public addAccountUser(id: number, data: any): Promise<any> {
     data["accountId"] = id;
-    return userService.create(data);
+    return this.userService.create(data);
   }
 }
