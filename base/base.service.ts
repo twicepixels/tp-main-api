@@ -8,4 +8,7 @@ export abstract class Service {
   constructor(protected req: Request, protected res: Response) {
   }
 
+  user(): any {
+    return this.req.user;
+  }
 }

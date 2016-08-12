@@ -11,7 +11,8 @@ module.exports = function (sequelize: any, DataTypes: any) {
       typeAccountId: {
         type: DataTypes.INTEGER,
         validate: {notEmpty: true}
-      }
+      },
+      billingId: DataTypes.STRING
     },
     {
       timestamps: false,
