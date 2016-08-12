@@ -16,3 +16,5 @@ USER_ROUTER.put('/:id', UserController.updateById);
 USER_ROUTER.delete('/:id', UserController.deleteById);
 //getUsersByAccount
 USER_ROUTER.get('/getUsersByAccount/:idAccount', UserController.getUsersByAccount);
+//changePassword
+USER_ROUTER.post('/changePassword', UserController.changePassword);

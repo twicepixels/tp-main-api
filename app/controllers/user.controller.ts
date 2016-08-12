@@ -38,4 +38,8 @@ export class UserController {
     data.insert("ACCOUNTID", accountId);
     c.handleService(res, userDao.getList("getUsersByAccount", data));
   }
+
+  public static changePassword(req: Request, res: Response): void {
+    c.handleService(res, userService.changePassword(req.body, req.user));
+  }
 }
