@@ -29,7 +29,7 @@ export class AccountController {
   }
 
   public static getAll(req:Request, res:Response) {
-    AccountService.getAll(null, function (err:any, result:any) {
+    AccountService.getAll(req.body, function (err:any, result:any) {
       if (err) {
         res.status(500).send({
           message: err.message
@@ -74,7 +74,7 @@ export class AccountController {
           message: err.message
         });
       } else {
-        res.send(result);
+        res.json(result);
       }
     });
   }

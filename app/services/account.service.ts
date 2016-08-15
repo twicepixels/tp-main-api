@@ -6,7 +6,7 @@ export class AccountService extends Service {
 
 
   public static create(data:any, next:any) {
-    
+
     let model:any = this.Models;
     this.Models.Account.max('id')   /// get the max of the accounts registers from account table
      .then(function (accountMax:any) {
@@ -30,7 +30,7 @@ export class AccountService extends Service {
     }, function (error:any) {
       next(error, null);
     });
-    
+
   }
 
 
@@ -72,6 +72,7 @@ export class AccountService extends Service {
   }
 
   public static getById(id:number, next:any) {
+    console.log(id);
     this.Models.Account.find({
       where: {"id": id}
     }).then(function (account:any) {
@@ -84,7 +85,7 @@ export class AccountService extends Service {
   }
 
   public static deleteById(id:number, next:any) {
-    this.Models.Account.delete({
+    this.Models.Account.destroy({
       where: {"id": id}
     }).then(function (account:any) {
       // was found successfully!
