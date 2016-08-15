@@ -50,6 +50,7 @@ export class UserController {
   }
 
   public static changePassword(req: Request, res: Response): void {
-    c.handleService(res, userService.changePassword(req.body, req.user));
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.changePassword(req.body, req.user));
   }
 }
