@@ -1,8 +1,8 @@
-import { CryptoService } from "../../base/crypto.service";
-import { SequenceService } from "../services/sequence.service";
-let sequenceService: SequenceService = new SequenceService();
+import {CryptoService} from "../../base/crypto.service";
+import {SequenceService} from "../services/sequence.service";
+let sequenceService:SequenceService = new SequenceService();
 
-module.exports = (sequelize: any, DataTypes: any)=> {
+module.exports = (sequelize:any, DataTypes:any)=> {
   return sequelize.define('User', {
       id: {
         field: "userId",
@@ -35,19 +35,31 @@ module.exports = (sequelize: any, DataTypes: any)=> {
       freezeTableName: true,
       tableName: "customer_user",
       hooks: {
-        beforeCreate: (user: any, options: any, next: any)=> {
+        beforeCreate: (user:any, options:any, next:any)=> {
           CryptoService.crypt(user.password).then(
-            (hashedPassword: string)=> {
+            (hashedPassword:string)=> {
               user.createdAt = new Date();
               user.password = hashedPassword;
               sequenceService.getNextSequence("customer_user").then(
-                (result: any)=> {
+                (result:any)=> {
                   user.id = result.id;
                   next(null, user);
                 }, (error)=>next(error)
               );
             }, (error)=>next(error)
           );
+        },
+        beforeUpdate: (user:any, options:any, next:any)=> {
+          if (user.password) {
+            CryptoService.crypt(user.password).then(
+              (hashedPassword:string)=> {
+                user.password = hashedPassword;
+                next(null, user);
+              }, (error)=>next(error)
+            );
+          }else{
+            next(null, user);
+          }
         }
       },
       instanceMethods: {
