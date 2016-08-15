@@ -1,79 +1,56 @@
-import {Request, Response} from 'express';
-import {UserService} from "../services/user.service";
-import {GenericDao} from "../util/GenericDao";
-import {Map} from "../framework/Map";
+import { Request, Response } from 'express';
+import { Map } from "../../base/framework/Map";
+import { GenericDao } from "../../base/dao/GenericDao";
+import { UserService } from "../services/user.service";
+
+let c = require("../../base/base.controller");
+let userDao: GenericDao = new GenericDao("TpUserDal", "tp.user");
 
 export class UserController {
 
-  public static create(req:Request, res:Response) {
-    UserService.create(req.body, function (err:any, result:any) {
-      if (err) {
-        res.status(500).send({
-          message: err.message
-        });
-      } else {
-        res.send(result);
-      }
-    });
+  public static create(req: Request, res: Response): void {
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.create(req.body));
   }
 
-  public static updateById(req:Request, res:Response) {
-    let id = parseInt(req.param("id"));
-    UserService.updateById(id, req.body, function (err:any, result:any) {
-      if (err) {
-        res.status(500).send({
-          message: err.message
-        });
-      } else {
-        res.send(result);
-      }
-    });
+  public static updateById(req: Request, res: Response): void {
+    let id = parseInt(req.params["id"]);
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.updateById(id, req.body));
   }
 
-  public static getAll(req:Request, res:Response) {
-    UserService.getAll(req.body, function (err:any, result:any) {
-      if (err) {
-        res.status(500).send({
-          message: err.message
-        });
-      } else {
-        res.send(result);
-      }
-    });
+  public static getAll(req: Request, res: Response): void {
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.getAll(req.body));
   }
 
-  public static getById(req:Request, res:Response) {
-    let id = parseInt(req.param("id"));
-    UserService.getById(id, function (err:any, result:any) {
-      if (err) {
-        res.status(500).send({
-          message: err.message
-        });
-      } else {
-        res.send(result);
-      }
-    });
+  public static getCurrent(req: Request, res: Response): void {
+    c.handleService(res, new Promise((resolve: any)=> {
+      resolve(req.user.toJSON());
+    }));
   }
 
-  public static deleteById(req:Request, res:Response) {
-    let id = parseInt(req.param("id"));
-    UserService.deleteById(id, function (err:any, result:any) {
-      if (err) {
-        res.status(500).send({
-          message: err.message
-        });
-      } else {
-        res.send(result);
-      }
-    });
+  public static getById(req: Request, res: Response): void {
+    let id = parseInt(req.params["id"]);
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.getById(id));
   }
 
-  public static getUsersByAccount(req:Request, res:Response){
-    let accountId = parseInt(req.param("accountId"));
-    var data:Map = new Map();
-    data.insert("accountId", accountId);
-    let dao:GenericDao = new GenericDao("dals/TpUserDal.xml", "tp.user");
-    return dao.getList(req.body,"getUsersByAccount");
+  public static deleteById(req: Request, res: Response): void {
+    let id = parseInt(req.params["id"]);
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.deleteById(id));
   }
 
+  public static getUsersByAccount(req: Request, res: Response): void {
+    let accountId = parseInt(req.params["idAccount"]);
+    let data: Map = new Map();
+    data.insert("ACCOUNTID", accountId);
+    c.handleService(res, userDao.getList("getUsersByAccount", data));
+  }
+
+  public static changePassword(req: Request, res: Response): void {
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.changePassword(req.body, req.user));
+  }
 }

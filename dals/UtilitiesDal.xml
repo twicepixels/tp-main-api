@@ -1,0 +1,17 @@
+<dal>
+  <entities>
+    <entity id="general.sequence">
+      <settings/>
+      <operations>
+        <operation id="P_NextSequence">
+          <columns>
+            <column id="pName" type="NUMBER"/>
+          </columns>
+          <sql>
+            call twicepixels.P_NextSequence($pName);
+          </sql>
+        </operation>
+      </operations>
+    </entity>
+  </entities>
+</dal>

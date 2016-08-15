@@ -1,18 +1,18 @@
-import {Router} from 'express';
-import {AccountController} from "../../app/controllers/account.controller";
+import { Router } from 'express';
+import { AccountController } from "../../app/controllers/account.controller";
+var authenticatedPolicy = require("../policies/authenticated");
 
-
-export const ACCOUNT_ROUTER:Router = Router();
+export const ACCOUNT_ROUTER: Router = Router();
 // define routes
 //update
 ACCOUNT_ROUTER.post('/', AccountController.create);
 //getById
-ACCOUNT_ROUTER.get('/:id', AccountController.getById);
+ACCOUNT_ROUTER.get('/:id', authenticatedPolicy, AccountController.getById);
 //getAll
-ACCOUNT_ROUTER.post('/getAll', AccountController.getAll);
+ACCOUNT_ROUTER.post('/getAll', authenticatedPolicy, AccountController.getAll);
 //update
-ACCOUNT_ROUTER.put('/:id', AccountController.updateById);
+ACCOUNT_ROUTER.put('/:id', authenticatedPolicy, AccountController.updateById);
 //delete
-ACCOUNT_ROUTER.delete('/:id', AccountController.deleteById);
-//getMaxAccountId
-ACCOUNT_ROUTER.post('/getMaxAccountId', AccountController.getMaxAccountId);
+ACCOUNT_ROUTER.delete('/:id', authenticatedPolicy, AccountController.deleteById);
+//add user
+ACCOUNT_ROUTER.post('/:id/users', authenticatedPolicy, AccountController.addAccountUser);

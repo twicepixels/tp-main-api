@@ -1,10 +1,11 @@
-var passport = require("passport");
 import { Passport } from "passport";
-import { Service } from "./base.service";
+import { ModelLoader } from "./mysql.loader";
 import { CryptoService } from "./crypto.service";
+var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
-export class PassportService extends Service {
+export class PassportService {
+  static Models = ModelLoader.getInstance().getModels();
 
   public static config(): Passport {
     var auth = this;
@@ -24,12 +25,14 @@ export class PassportService extends Service {
               message: 'Unknown user ' + username
             });
           }
-          CryptoService.compare(password, user.password, (err: any, isEqual: boolean)=> {
-            if (!isEqual) {
-              return done(null, false, {message: 'Invalid Password'});
-            }
-            return done(null, user.toJSON(), {message: 'Logged In Successfully'});
-          });
+          CryptoService.compare(password, user.password).then(
+            (isEqual: boolean)=> {
+              if (!isEqual) {
+                return done(null, false, {message: 'Invalid Password'});
+              }
+              return done(null, user.toJSON(), {message: 'Logged In Successfully'});
+            }, (error: any)=>done(error)
+          );
         });
       });
     }));
