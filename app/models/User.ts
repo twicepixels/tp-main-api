@@ -26,6 +26,7 @@ module.exports = (sequelize: any, DataTypes: any)=> {
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       location: DataTypes.STRING,
+      countryId: DataTypes.INTEGER,
       createdAt: DataTypes.DATE,
       verifiedAt: DataTypes.DATE
     },

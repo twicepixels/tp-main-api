@@ -5,6 +5,7 @@ import { AUTH_ROUTER } from "./auth.route";
 import { USER_ROUTER } from "./user.route";
 import { UTIL_ROUTER } from "./util.route";
 import { ACCOUNT_ROUTER } from "./account.route";
+import { COUNTRY_ROUTER } from "./country.route";
 import { BILLING_CARD_ROUTER } from "./billing/card.route";
 
 export class AppRouter {
@@ -36,6 +37,7 @@ export class AppRouter {
     router.use("/utils", UTIL_ROUTER);
     router.use("/users", USER_ROUTER);
     router.use("/accounts", ACCOUNT_ROUTER);
+    router.use("/countries", COUNTRY_ROUTER);
 
     //billing routers
     router.use("/billing/cards", BILLING_CARD_ROUTER);
