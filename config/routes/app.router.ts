@@ -4,7 +4,8 @@ var authenticatedPolicy = require("../policies/authenticated");
 import { AUTH_ROUTER } from "./auth.route";
 import { USER_ROUTER } from "./user.route";
 import { UTIL_ROUTER } from "./util.route";
-import {ACCOUNT_ROUTER} from "./account.route";
+import { ACCOUNT_ROUTER } from "./account.route";
+import { BILLING_CARD_ROUTER } from "./billing/card.route";
 
 export class AppRouter {
   public static config(router: Router): void {
@@ -33,7 +34,10 @@ export class AppRouter {
     router.use("/", APP_ROUTER);
     router.use("/auth", AUTH_ROUTER);
     router.use("/utils", UTIL_ROUTER);
-    router.use("/users", authenticatedPolicy, USER_ROUTER);
-    router.use("/accounts", authenticatedPolicy, ACCOUNT_ROUTER);
+    router.use("/users", USER_ROUTER);
+    router.use("/accounts", ACCOUNT_ROUTER);
+
+    //billing routers
+    router.use("/billing/cards", BILLING_CARD_ROUTER);
   }
 }
