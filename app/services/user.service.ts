@@ -27,8 +27,8 @@ export class UserService extends Service {
   public changePassword(data:any, user:any): Promise<any> {
     //let userData = user;
     let _service = this;
-    let oldPassword = data["oldPassword"];
-    let newPassword = data["newPassword"];
+    let oldPassword = data["oldpassword"];
+    let newPassword = data["newpassword"];
     return new Promise((resolve: any, reject: any)=> {
       CryptoService.compare(oldPassword, user.password).then(
         (isEqual: boolean)=> {
