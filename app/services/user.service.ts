@@ -1,6 +1,5 @@
 import { Service } from "../../base/base.service";
 import { CryptoService } from "../../base/crypto.service";
-import {error} from "util";
 
 export class UserService extends Service {
 
@@ -24,23 +23,21 @@ export class UserService extends Service {
     return this.Models.User.destroy({where: {"id": id}});
   }
 
-  public changePassword(data:any, user:any): Promise<any> {
-    //let userData = user;
-    let _service = this;
-    let oldPassword = data["oldpassword"];
-    let newPassword = data["newpassword"];
+  public changePassword(data: any, user?: any): Promise<any> {
+    user = user || this.user();
+    let oldPassword = data["oldPassword"];
+    let newPassword = data["newPassword"];
     return new Promise((resolve: any, reject: any)=> {
       CryptoService.compare(oldPassword, user.password).then(
         (isEqual: boolean)=> {
           if (!isEqual) {
-            reject({message: 'Invalid Password'});
-          }else if(oldPassword == newPassword){
-            reject({message: 'Must be diferent password'});
+            reject({message: 'Invalid password'});
+          } else if (oldPassword == newPassword) {
+            reject({message: 'New password must be diferent'});
           } else {
-            user.password = newPassword;
-            _service.Models.User.update(user, {where: {"id": user.id}}).then(
-              (result:any) => resolve(result),
-              (error:any) => reject(error)
+            user.update({password: newPassword}).then(
+              (result: any) => resolve(result),
+              (error: any) => reject(error)
             ).catch((error: any)=>reject(error));
           }
         }, (error: any)=>reject(error)
