@@ -7,6 +7,6 @@ module.exports.session = {
   saveUninitialized: true,
   secret: 'f134ec88b47384b00060e72c06cd2012',
   store: new MongoStore({
-    url: 'mongodb://172.16.122.12/test-app'
+    url: 'mongodb://172.16.122.12/local'
   })
 };
