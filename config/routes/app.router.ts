@@ -7,6 +7,7 @@ import { UTIL_ROUTER } from "./util.route";
 import { ACCOUNT_ROUTER } from "./account.route";
 import { COUNTRY_ROUTER } from "./country.route";
 import { BILLING_CARD_ROUTER } from "./billing/card.route";
+import {BILLING_CUSTOMER_ROUTER} from "./billing/customer.route";
 
 export class AppRouter {
   public static config(router: Router): void {
@@ -41,5 +42,6 @@ export class AppRouter {
 
     //billing routers
     router.use("/billing/cards", BILLING_CARD_ROUTER);
+    router.use("/billing/customers", BILLING_CUSTOMER_ROUTER);
   }
 }
