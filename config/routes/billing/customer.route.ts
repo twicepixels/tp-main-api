@@ -9,5 +9,5 @@ import { CustomerController } from "../../../app/controllers/billing/customer.co
 export const BILLING_CUSTOMER_ROUTER: Router = Router();
 // define routes
 //create
-BILLING_CUSTOMER_ROUTER.post('/', authenticatedPolicy, CustomerController.create);
+//BILLING_CUSTOMER_ROUTER.post('/', authenticatedPolicy, CustomerController.create);
 BILLING_CUSTOMER_ROUTER.get('/', authenticatedPolicy, CustomerController.getCustomers);

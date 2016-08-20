@@ -7,7 +7,7 @@ import { BillingService } from "./billing.service";
 
 export class CustomerService extends BillingService {
 
-  public addCustomer(description: string, source: string): Promise<any> {
+ /* public addCustomer(description: string, source: string): Promise<any> {
     let _service = this;
     return new Promise((resolve: any, reject: any)=> {
       // _service.getBillingId(accountId, tokenId).then(
@@ -19,7 +19,7 @@ export class CustomerService extends BillingService {
       //   }, (error: any)=>reject(error)
       // );
     });
-  }
+  }*/
 
   public getCustomers(): Promise<any> {
     let _service = this;

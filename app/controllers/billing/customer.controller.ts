@@ -9,12 +9,12 @@ let c = require("../../../base/base.controller");
 
 export class CustomerController {
 
-  public static create(req: Request, res: Response) {
+ /* public static create(req: Request, res: Response) {
     let _service = new CustomerService(req, res);
     let description: string = req.body["description"];
     let source: string = req.body["source"];
     c.handleService(res, _service.addCustomer(description, source));
-  }
+  }*/
 
   public static getCustomers(req: Request, res: Response) {
     let _service = new CustomerService(req, res);
