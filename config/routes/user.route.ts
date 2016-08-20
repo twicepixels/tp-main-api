@@ -13,6 +13,8 @@ USER_ROUTER.get('/me', authenticatedPolicy, UserController.getCurrent);
 USER_ROUTER.get('/:id', authenticatedPolicy, UserController.getById);
 //getAll
 USER_ROUTER.post('/getAll', UserController.getAll);
+//getByEmail
+USER_ROUTER.get('/getByEmail/:email', UserController.getByEmail);
 //update
 USER_ROUTER.put('/:id', authenticatedPolicy, UserController.updateById);
 //delete

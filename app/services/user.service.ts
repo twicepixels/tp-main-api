@@ -19,6 +19,10 @@ export class UserService extends Service {
     return this.Models.User.find({where: {"id": id}});
   }
 
+  public getByEmail(email: string): Promise<any> {
+    return this.Models.User.find({where: {"email": email}});
+  }
+
   public deleteById(id: number): Promise<any> {
     return this.Models.User.destroy({where: {"id": id}});
   }

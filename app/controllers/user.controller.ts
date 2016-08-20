@@ -36,6 +36,12 @@ export class UserController {
     c.handleService(res, _service.getById(id));
   }
 
+  public static getByEmail(req: Request, res: Response) {
+    let email = req.params["email"];
+    let _service = new UserService(req, res);
+    c.handleService(res, _service.getByEmail(email));
+  }
+
   public static deleteById(req: Request, res: Response): void {
     let id = parseInt(req.params["id"]);
     let _service = new UserService(req, res);
