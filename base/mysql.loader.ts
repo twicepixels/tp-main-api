@@ -35,21 +35,18 @@ export class ModelLoader {
     var dir = "app/models";
     var dbs = this._dbs;
     var models = this._models;
-    var connects = connections["connections"];
-    Object.keys(connects).forEach(function (key) {
-      var coll = connects[key];
-      if (coll["dialect"] == "mysql") {
-        var sqlz = new Sequelize(coll["database"],
-          coll["user"], coll["password"], coll);
-        fs.readdirSync(dir).filter(function (file) {
-          return path.extname(file) == ".js";
-        }).forEach(function (file) {
-          var c = path.join("../" + dir, file);
-          var model = sqlz.import(c);
-          models[model.name] = model;
-        });
-        dbs[key] = sqlz;
-      }
-    });
+    var conn = connections.tpMySQL01;
+    if (conn["dialect"] == "mysql") {
+      var sqlz = new Sequelize(conn["database"],
+        conn["user"], conn["password"], conn);
+      fs.readdirSync(dir).filter(function (file) {
+        return path.extname(file) == ".js";
+      }).forEach(function (file) {
+        var c = path.join("../" + dir, file);
+        var model = sqlz.import(c);
+        models[model.name] = model;
+      });
+      dbs["tpMySQL01"] = sqlz;
+    }
   }
 }
