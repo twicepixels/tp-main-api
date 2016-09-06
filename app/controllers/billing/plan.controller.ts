@@ -31,4 +31,19 @@ export class PlanController {
     let _service = new PlanService(req, res);
     c.handleService(res, _service.getPlans());
   }
+
+
+  public static update(req: Request, res: Response) {
+    let id = parseInt(req.params["id"]);
+    let _service = new PlanService(req, res);
+    c.handleService(res, _service.update(id, req.body));
+  }
+  
+
+  public static delete(req: Request, res: Response) {
+    let id = parseInt(req.params["id"]);
+    let _service = new PlanService(req, res);
+    c.handleService(res, _service.delete(id));
+  }
+  
 }
