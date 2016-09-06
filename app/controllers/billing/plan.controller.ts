@@ -11,7 +11,7 @@ export class PlanController {
 
   //amount: 5000, interval: "month", name: "Emerald essentials", currency: "usd", id: "emerald-essentials"
 
-  public static create(req:Request, res:Response) {
+/*  public static create(req:Request, res:Response) {
     let _service = new PlanService(req, res);
     let amount:number = req.body["amount"];
     let interval:string = req.body["interval"];
@@ -20,6 +20,11 @@ export class PlanController {
     let id:string = req.body["id"];
 
     c.handleService(res, _service.addPlan(amount, interval, name, currency, id));
+  }*/
+
+  public static create(req: Request, res: Response) {
+    let _service = new PlanService(req, res);
+    c.handleService(res, _service.create(req.body));
   }
 
   public static getPlans(req:Request, res:Response) {

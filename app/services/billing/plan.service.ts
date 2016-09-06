@@ -3,6 +3,7 @@
  */
 
 import {BillingService} from "./billing.service";
+import {UtilService} from "../util.service";
 
 export class PlanService extends BillingService {
 
@@ -30,6 +31,49 @@ export class PlanService extends BillingService {
     });
   }
 
+
+
+
+  public create(data: any): Promise<any> {
+    let _service = this;
+    return new Promise((resolve: any, reject: any)=> {
+      //obtiene la descripcion del intervalo, se necesita para enviarla a stripe
+      _service.Models.Catalog.find({where: {catalogId: data.intervalId }}).then((dataCat: any) => {
+        let interval = dataCat.description ;
+        console.log(interval);
+
+        //guarda en base de datos
+        _service.Models.Package.create(data).then(
+          (customerPackage: any)=> {
+            //guarda en stripe
+            _service.billingAPI.plans.create({
+              amount: customerPackage.amount ,
+              interval: interval ,
+              name: customerPackage.name ,
+              currency: customerPackage.currency ,
+              id: customerPackage.id
+            }).then(
+              (result:any)=>resolve(result),
+              (error: any)=> {
+                //_service.deleteById(customerPackage.id);
+                this.deleteById(customerPackage.id);
+                reject(error);
+              }
+            );
+          },
+          (error: any)=>reject(error)
+        );
+
+      }, (reason: string) => {
+        console.log(reason);
+      },
+        (error: any)=>reject(error));
+    });
+  }
+
+
+
+
   public getPlans():Promise<any> {
     let _service = this;
     return new Promise((resolve:any, reject:any)=> {
@@ -42,5 +86,9 @@ export class PlanService extends BillingService {
       //}, (error: any)=>reject(error)
       //);
     });
+  }
+
+  public deleteById(id: number): Promise<any> {
+    return this.Models.Package.destroy({where: {"id": id}});
   }
 }
