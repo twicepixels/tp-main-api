@@ -48,6 +48,7 @@ module.exports = function (sequelize: any, DataTypes: any) {
           sequenceService.getNextSequence("customer_package")
             .then((result: any)=> {
               customerPackage.id = result.id;
+              console.log(result.id);
               next(null, customerPackage);
             }, (error)=>next(error));
         }

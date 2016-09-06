@@ -40,7 +40,6 @@ export class PlanService extends BillingService {
       //obtiene la descripcion del intervalo, se necesita para enviarla a stripe
       _service.Models.Catalog.find({where: {catalogId: data.intervalId }}).then((dataCat: any) => {
         let interval = dataCat.description ;
-        console.log(interval);
 
         //guarda en base de datos
         _service.Models.Package.create(data).then(
@@ -51,7 +50,9 @@ export class PlanService extends BillingService {
               interval: interval ,
               name: customerPackage.name ,
               currency: customerPackage.currency ,
-              id: customerPackage.id
+              id: customerPackage.name,
+              interval_count: customerPackage.interval_count
+
             }).then(
               (result:any)=>resolve(result),
               (error: any)=> {
