@@ -9,6 +9,7 @@ import { COUNTRY_ROUTER } from "./country.route";
 import { BILLING_CARD_ROUTER } from "./billing/card.route";
 import {BILLING_CUSTOMER_ROUTER} from "./billing/customer.route";
 import {BILLING_PLAN_ROUTER} from "./billing/plan.route";
+import {IMAGE_ROUTER} from "./collaborator/image.route";
 
 export class AppRouter {
   public static config(router: Router): void {
@@ -40,6 +41,7 @@ export class AppRouter {
     router.use("/users", USER_ROUTER);
     router.use("/accounts", ACCOUNT_ROUTER);
     router.use("/countries", COUNTRY_ROUTER);
+    router.use("/collaborators", IMAGE_ROUTER);
 
     //billing routers
     router.use("/billing/cards", BILLING_CARD_ROUTER);
