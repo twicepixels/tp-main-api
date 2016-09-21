@@ -1,6 +1,9 @@
-import {CryptoService} from "../../base/crypto.service";
-import {SequenceService} from "../services/sequence.service";
-let sequenceService:SequenceService = new SequenceService();
+/**
+ * Created by Juanjo on 20/09/2016.
+ */
+import { SequenceService } from "../services/sequence.service";
+let sequenceService: SequenceService = new SequenceService();
+
 
 module.exports = (sequelize:any, DataTypes:any)=> {
   return sequelize.define('collaborator', {
@@ -31,7 +34,7 @@ module.exports = (sequelize:any, DataTypes:any)=> {
         validate: {notEmpty: true}
       },
       rating: DataTypes.INTEGER,
-      picture: DataTypes.STRING ,
+      picture: DataTypes.STRING,
       authorized: {
         type: DataTypes.BOOLEAN,
         validate: {notEmpty: true}
@@ -53,7 +56,7 @@ module.exports = (sequelize:any, DataTypes:any)=> {
       tableName: "customer_collaborator",
       hooks: {
         beforeCreate: (collaborator: any, options: any, next: any)=> {
-          sequenceService.getNextSequence("customer_account") //TODO: CREAR SECUENCOIA Y CAMBIAR NOMBRE
+          sequenceService.getNextSequence("customer_collaborator") 
             .then((result: any)=> {
               collaborator.id = result.id;
               next(null, collaborator);
@@ -63,3 +66,4 @@ module.exports = (sequelize:any, DataTypes:any)=> {
     }
   );
 };
+
