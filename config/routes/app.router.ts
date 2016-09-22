@@ -10,6 +10,7 @@ import { BILLING_CARD_ROUTER } from "./billing/card.route";
 import {BILLING_CUSTOMER_ROUTER} from "./billing/customer.route";
 import {BILLING_PLAN_ROUTER} from "./billing/plan.route";
 import {IMAGE_ROUTER} from "./collaborator/image.route";
+import {COLLABORATOR_ROUTER} from "./collaborator/collaborator.route";
 
 export class AppRouter {
   public static config(router: Router): void {
@@ -40,12 +41,15 @@ export class AppRouter {
     router.use("/utils", UTIL_ROUTER);
     router.use("/users", USER_ROUTER);
     router.use("/accounts", ACCOUNT_ROUTER);
-    router.use("/countries", COUNTRY_ROUTER);
+    router.use("/countries", COUNTRY_ROUTER)
     router.use("/collaborators", IMAGE_ROUTER);
 
     //billing routers
     router.use("/billing/cards", BILLING_CARD_ROUTER);
     router.use("/billing/customers", BILLING_CUSTOMER_ROUTER);
     router.use("/billing/plans", BILLING_PLAN_ROUTER);
+
+    //collaborator routers
+    router.use("/collaborator/collaborator", COLLABORATOR_ROUTER);
   }
 }
