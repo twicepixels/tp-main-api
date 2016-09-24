@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { Service } from "./base.service";
 
 let parameters = require('../config/parameters');
-const _fileSystem = require('fs');
 const AWS = require('aws-sdk');
 const formidable = require('formidable');
 
@@ -27,23 +26,7 @@ export class AWSService extends Service {
     AWS.config.secretAccessKey = secretAccessKey;
     AWS.config.region = awsRegion;
   }
-
-  public transferUloadedFileToS3(file:any):Promise<any>{
-    return new Promise((resolve: any, reject: any)=> {
-      _fileSystem.readFile(file.path, (err:any, data:any) => {
-        if (err) {
-          reject(err);
-        }else{
-          this.uploadFileToS3(data, file.name).then((data:any)=>{
-            resolve(data);
-          },(error:any)=>{
-            reject(error);
-          });
-        }//end if
-      });
-    });
-  }
-
+  
   public formidableUploadFiles(req:any):Promise<any>{
     var form = new formidable.IncomingForm();
     form.multiples = true;

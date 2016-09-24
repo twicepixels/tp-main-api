@@ -10,4 +10,9 @@ export class ImageController {
     c.handleService(res, _service.uploadFiles(req));
   }
 
+  public static create(req: Request, res: Response) {
+    let _service = new ImageService(req, res);
+    c.handleService(res, _service.create(req.body));
+  }
+
 }

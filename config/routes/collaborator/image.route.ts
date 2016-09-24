@@ -8,5 +8,6 @@ export const IMAGE_ROUTER: Router = Router();
 // define routes
 //update
 IMAGE_ROUTER.post('/upload', ImageController.uploadFiles);
+IMAGE_ROUTER.post('/create', ImageController.create);
 
 
