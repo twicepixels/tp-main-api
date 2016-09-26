@@ -38,9 +38,9 @@ export class ImageService extends AWSService {
 
   private transferUloadedFileToS3(file:any):Promise<any>{
     return new Promise((resolve: any, reject: any)=> {
-      _fileSystem.readFile(file.path, (err:any, data:any) => {
-        if (err) {
-          reject(err);
+      _fileSystem.readFile(file.path, (error:any, data:any) => {
+        if (error) {
+          resolve(this.getError(file, error, 'readFile'));
         }else{
           let imageTag = file.path.substr(file.path.indexOf("_")+1, file.path.length)+"-";
           this.uploadFileToS3(data, imageTag+file.name).then((data:any)=>{
@@ -50,16 +50,24 @@ export class ImageService extends AWSService {
             this.create(image).then((result:any)=>{
               resolve(result);
             },(error:any)=>{
-              reject(error);
+              resolve(this.getError(file, error, 'mysqlCreate'));
             });
           },(error:any)=>{
-            reject(error);
+            resolve(this.getError(file, error, 'uploadFileToS3'));
           });
         }//end if
       });
     });
   }
 
+  private getError(file:any, msgError:string, stageError:string):any{
+    let _error:any = {};
+    _error['fileName'] = file.name;
+    _error['stage'] = stageError;
+    _error['error'] = msgError;
+    return _error;
+  }
+  
   public create(data: any): Promise<any> {
     return this.Models.Image.create(data);
   }
