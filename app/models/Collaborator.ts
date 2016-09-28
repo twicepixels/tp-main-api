@@ -6,7 +6,7 @@ let sequenceService: SequenceService = new SequenceService();
 
 
 module.exports = (sequelize:any, DataTypes:any)=> {
-  return sequelize.define('collaborator', {
+  return sequelize.define('Collaborator', {
       id: {
         field: "collaboratorId",
         primaryKey: true,
@@ -56,7 +56,7 @@ module.exports = (sequelize:any, DataTypes:any)=> {
       tableName: "customer_collaborator",
       hooks: {
         beforeCreate: (collaborator: any, options: any, next: any)=> {
-          sequenceService.getNextSequence("customer_collaborator") 
+          sequenceService.getNextSequence("customer_collaborator")
             .then((result: any)=> {
               collaborator.id = result.id;
               next(null, collaborator);
