@@ -42,7 +42,7 @@ export class AppRouter {
     router.use("/users", USER_ROUTER);
     router.use("/accounts", ACCOUNT_ROUTER);
     router.use("/countries", COUNTRY_ROUTER)
-    router.use("/collaborators", IMAGE_ROUTER);
+    router.use("/collaborator/image", IMAGE_ROUTER);
 
     //billing routers
     router.use("/billing/cards", BILLING_CARD_ROUTER);

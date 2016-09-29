@@ -5,5 +5,5 @@ module.exports = {
   awsRegion: "us-west-2",
   awsBucket: "bck-twicepx-data",
   filesPath: "[ruta]",
-  folderName: "uploads"
+  folderName: "upload"
 };
