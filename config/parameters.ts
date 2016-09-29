@@ -4,6 +4,5 @@ module.exports = {
   awsSecretAccessKey: "######################",
   awsRegion: "us-west-2",
   awsBucket: "bck-twicepx-data",
-  filesPath: "[ruta]",
-  folderName: "upload"
+  uploadFolder: "tmp"
 };

@@ -8,4 +8,9 @@ export class UtilController {
     let _service = new UtilService(req, res);
     c.handleService(res, _service.getCatalog(req.body));
   }
+
+  public static getCountries(req: Request, res: Response): void {
+    let _service = new UtilService(req, res);
+    c.handleService(res, _service.getCountries(req.body));
+  }
 }

@@ -3,61 +3,28 @@ import { Service } from "./base.service";
 
 let parameters = require('../config/parameters');
 const AWS = require('aws-sdk');
-const formidable = require('formidable');
-
 
 export class AWSService extends Service {
 
-  protected awsBucket:any;
-  protected arrayFiles:Array<any> = [];
+  protected awsBucket: any;
 
   constructor(req: Request, res: Response) {
     super(req, res);
-    this.init();
-  }
-
-  public init(): void{
-    this.updateAwsConfig(parameters.awsAccessKeyId, parameters.awsSecretAccessKey, parameters.awsRegion);
-  }
-
-  public updateAwsConfig(accessKeyId:string, secretAccessKey:string, awsRegion:string):any{
     AWS.config = new AWS.Config();
-    AWS.config.accessKeyId = accessKeyId;
-    AWS.config.secretAccessKey = secretAccessKey;
-    AWS.config.region = awsRegion;
-  }
-  
-  public formidableUploadFiles(req:any):Promise<any>{
-    var form = new formidable.IncomingForm();
-    form.multiples = true;
-    form.uploadDir = parameters.filesPath + parameters.folderName;
-
-    return new Promise((resolve: any, reject: any)=> {
-
-      form.on('file', (field:any, file:any)=> {
-        this.arrayFiles.push(file);
-      });
-
-      form.on('error', (err:any) => {
-        reject('error:'+err);
-      });
-
-      form.on('end', () => {
-        resolve(true);
-      });
-
-      form.parse(req);
-
-    });
+    AWS.config.region = parameters.awsRegion;
+    AWS.config.accessKeyId = parameters.awsAccessKeyId;
+    AWS.config.secretAccessKey = parameters.awsSecretAccessKey;
   }
 
-  public uploadFileToS3(data:any, fileName:any):Promise<any>{
+  public uploadFileToS3(fileData: any, fileName: any): Promise<any> {
     return new Promise((resolve: any, reject: any)=> {
       this.awsBucket = new AWS.S3();
-      let params = { Bucket: parameters.awsBucket, Key: fileName,  Body: data };
-      this.awsBucket.putObject(params, (err:any, data:any) => {
+      this.awsBucket.putObject({
+        Key: fileName,
+        Body: fileData,
+        Bucket: parameters.awsBucket
+      }, (err: any, data: any) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
           resolve(data);
@@ -65,6 +32,5 @@ export class AWSService extends Service {
       });
     });
   }
-
 }
 
