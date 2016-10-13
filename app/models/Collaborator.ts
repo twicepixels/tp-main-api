@@ -35,6 +35,7 @@ module.exports = (sequelize:any, DataTypes:any)=> {
       },
       rating: DataTypes.INTEGER,
       picture: DataTypes.STRING,
+      city: DataTypes.STRING,
       authorized: {
         type: DataTypes.BOOLEAN,
         validate: {notEmpty: true}
