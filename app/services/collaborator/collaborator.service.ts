@@ -14,8 +14,8 @@ export class CollaboratorService extends Service {
     return this.Models.Collaborator.update(data, {where: {"id": id}});
   }
 
-  public getAll(criteria: any): Promise<any> {
-    return this.Models.Collaborator.findAll({where: criteria});
+  public getAll(data: any): Promise<any> {
+    return this.Models.Collaborator.findAll({where: data});
   }
 
   public getById(id: number): Promise<any> {

@@ -9,7 +9,7 @@ COLLABORATOR_MAIN_ROUTER.post('/', CollaboratorController.create);
 //getById
 COLLABORATOR_MAIN_ROUTER.get('/:id', authenticatedPolicy, CollaboratorController.getById);
 //getAll
-COLLABORATOR_MAIN_ROUTER.post('/getAll', authenticatedPolicy, CollaboratorController.getAll);
+COLLABORATOR_MAIN_ROUTER.post('/getAll', CollaboratorController.getAll);
 //update
 COLLABORATOR_MAIN_ROUTER.put('/:id', authenticatedPolicy, CollaboratorController.updateById);
 //delete
