@@ -12,6 +12,7 @@ COLLABORATOR_MAIN_ROUTER.get('/:id', authenticatedPolicy, CollaboratorController
 COLLABORATOR_MAIN_ROUTER.post('/getAll', CollaboratorController.getAll);
 //update
 COLLABORATOR_MAIN_ROUTER.put('/:id', authenticatedPolicy, CollaboratorController.updateById);
+
 //delete
 COLLABORATOR_MAIN_ROUTER.delete('/:id', authenticatedPolicy, CollaboratorController.deleteById);
 
