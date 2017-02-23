@@ -34,7 +34,8 @@ module.exports = (sequelize:any, DataTypes:any)=> {
         validate: {notEmpty: true}
       },
       rating: DataTypes.INTEGER,
-      picture: DataTypes.STRING,
+      //picture: DataTypes.Blob,
+      picture: DataTypes.BLOB('long'),
       city: DataTypes.STRING,
       authorized: {
         type: DataTypes.BOOLEAN,
@@ -48,7 +49,7 @@ module.exports = (sequelize:any, DataTypes:any)=> {
         type: DataTypes.INTEGER,
         validate: {notEmpty: true}
       },
-      description: DataTypes.STRING,
+      description: DataTypes.STRING
 
     },
     {
